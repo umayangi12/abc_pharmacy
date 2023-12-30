@@ -28,6 +28,8 @@ export default function List() {
     fetchData();
   }, [searchParams]);
 
+  let myPage = searchParams.get('page') ? searchParams.get('page') : 0
+
   return (
     <div className="flex justify-center">
       <div className="w-full lg:w-1/3">
@@ -44,6 +46,11 @@ export default function List() {
                   <SingleItem key={key} item={item} fetchData={fetchData} />
                 ))
               : ""}
+          </div>
+          <div className="mt-10">
+            {Array.from({length: pages}, (_, index) => index + 1).map((pg, key) =>
+            <Link className={`border px-3 py-1 mr-3 ${myPage == key ? 'bg-orange-600 text-orange-100' : ''}`} to={`?page=${key}`}>{key+1}</Link>
+            )}
           </div>
         </div>
       </div>
