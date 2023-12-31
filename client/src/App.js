@@ -4,15 +4,26 @@ import List from "./items/List";
 import ViewItem from "./items/ViewItem";
 import InvoiceList from "./invoices/InvoiceList";
 import ViewInvoice from "./invoices/ViewInvoice";
+import Header from "./components/header/Header";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route index element={<List/>}></Route>
-        <Route path="/items/:id" element={<ViewItem/>}></Route>
-        <Route path="/invoices/:id" element={<ViewInvoice/>}></Route>
-        <Route path="/invoices" element={<InvoiceList/>}></Route>
+        <Route
+          path="/"
+          element={
+            <div>
+              <Header />
+              
+            </div>
+          }
+        />
+        {/* <Route index element={<List/>}></Route> */}
+        <Route path="/items/:id" element={<ViewItem />}></Route>
+        <Route path="/invoices/:id" element={<ViewInvoice />}></Route>
+        <Route path="/invoices" element={<InvoiceList />}></Route>
+        <Route path="/items" element={<List />}></Route>
       </Routes>
     </Router>
   );
