@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API_URL } from "../config";
 
-export default function ViewInvoice() {
+export default function ViewItem() {
   let { id } = useParams();
-  const [items, setItem] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${API_URL}/items/${id}`);
+        const response = await fetch(`${API_URL}/invoices/${id}`);
         const json = await response.json();
-        setItem(json.data);
+        setInvoices(json.data);
         setLoading(false);
       } catch (error) {
         console.log("error:", error);
@@ -35,24 +35,38 @@ export default function ViewInvoice() {
                 </Link>
               </div>
               <div>
-                <h1 className="font-medium"> Item No {items.ID}</h1>
+                <h1 className="font-medium"> Invoice No {invoices.ID}</h1>
               </div>
               <br />
               <div className="px-5 rounded-lg bg-slate-100">
                 <div className="flex py-4 border-b">
                   <div className="mr-4 text-slate-400">Name</div>
-                  <div className="font-medium text-slate-800">{items.Name}</div>
-                </div>
-                <div className="flex py-4 border-b">
-                  <div className="mr-4 text-slate-400">Unit Price</div>
                   <div className="font-medium text-slate-800">
-                    {items.Price}
+                    {invoices.Iname}
                   </div>
                 </div>
                 <div className="flex py-4 border-b">
-                  <div className="mr-4 text-slate-400">Item Category</div>
+                  <div className="mr-4 text-slate-400">Mobile Number</div>
                   <div className="font-medium text-slate-800">
-                    {items.Category}
+                    {invoices.Mobile}
+                  </div>
+                </div>
+                <div className="flex py-4 border-b">
+                  <div className="mr-4 text-slate-400">Email</div>
+                  <div className="font-medium text-slate-800">
+                    {invoices.Email}
+                  </div>
+                </div>
+                <div className="flex py-4 border-b">
+                  <div className="mr-4 text-slate-400">Address</div>
+                  <div className="font-medium text-slate-800">
+                    {invoices.Address}
+                  </div>
+                </div>{" "}
+                <div className="flex py-4 border-b">
+                  <div className="mr-4 text-slate-400">Billing</div>
+                  <div className="font-medium text-slate-800">
+                    {invoices.Billing}
                   </div>
                 </div>
               </div>

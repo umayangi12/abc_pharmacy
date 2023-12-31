@@ -17,7 +17,6 @@ export default function List() {
     try {
       const response = await fetch(`${API_URL}/items?sort=-id&size=5${page}`);
       const json = await response.json();
-      console.log(json)
       setItem(json.data.items);
       setPages(json.data.total_pages);
     } catch (error) {

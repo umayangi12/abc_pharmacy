@@ -17,7 +17,6 @@ export default function InvoiceList() {
     try {
       const response = await fetch(`${API_URL}/invoices?sort=-id&size=5${page}`);
       const json = await response.json();
-      console.log(json)
       setInvoice(json.data.items );
       setPages(json.data.total_pages );
     } catch (error) {
@@ -41,7 +40,7 @@ export default function InvoiceList() {
     closeModal();
     form.reset();
     fetchData();
-    navigate("/");
+    navigate("/invoices");
   };
 
   const storeInvoice = (e) => {
