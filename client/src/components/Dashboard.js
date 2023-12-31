@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "./header/Header";
 import Footer from "./Footer";
 
+import dash from "../assets/dash.jpg"
+
 function Dashboard() {
   let navigate = useNavigate();
 
@@ -17,9 +19,16 @@ function Dashboard() {
     navigate("/invoices");
   };
   return (
-    <div>
-        <Header/>
-      <div className="flex items-center justify-center h-screen bg-gray-600">
+    <div
+      className="h-screen"
+      style={{
+        background: `url(${dash}) center/cover no-repeat fixed`,
+      }}
+    >
+      <div className="absolute inset-0 bg-black opacity-60"></div>
+      <Header />
+
+      <div className="flex items-center justify-center h-screen ">
         <div className="max-w-[1240px] grid md:grid-cols-2 gap-12">
           <div className="p-2 transition-all duration-300 transform bg-white shadow-lg w-60 rounded-x1 hover:-translate-y-2 hover:shadow-2xl">
             <img
@@ -69,7 +78,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

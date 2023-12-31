@@ -38,7 +38,7 @@ export default function ViewItem() {
                 </Link>
               </div>
               <div>
-                <h1 className="font-medium"> Item No {items.ID}</h1>
+                <h2 className="text-lg font-bold"> Item No {items.ID}</h2>
               </div>
               <br />
               <div className="px-5 rounded-lg bg-slate-100">
