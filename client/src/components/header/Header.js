@@ -34,7 +34,7 @@ const Header = () => {
     <section className="navBarSection">
       <div className={transparent}>
         <div className="logoDiv">
-          <a href="/home" className="logo">
+          <a href="/" className="logo">
             <h1 className="flex">
               <MdLocalPharmacy className="icon" />
               ABC Pharmacy
