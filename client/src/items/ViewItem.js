@@ -34,6 +34,10 @@ export default function ViewItem() {
                   <h1 className="font-bold">Go back</h1>
                 </Link>
               </div>
+              <div>
+                <h1 className="font-medium"> Item No {items.ID}</h1>
+              </div>
+              <br/>
               <div className="px-5 rounded-lg bg-slate-100">
                 <div className="flex py-4 border-b">
                   <div className="mr-4 text-slate-400">Name</div>

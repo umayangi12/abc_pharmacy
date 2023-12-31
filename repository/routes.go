@@ -14,5 +14,13 @@ func (repo *Repository) SetUpRoutes(app *fiber.App){
 	api.Patch("/items/:id", repo.UpdateItem)
 	api.Delete("/items/:id", repo.DeleteItem)
 	api.Get("/items/:id", repo.GetItemByID)
+
+
+	api.Get("/invoices", repo.GetInvoices)
+	api.Post("/invoices", repo.CreateInvoice)
+	api.Patch("/invoices/:id", repo.UpdateInvoice)
+	api.Delete("/invoices/:id", repo.DeleteInvoice)
+	api.Get("/invoices/:id", repo.GetInvoiceByID)
+	
 	
 }
