@@ -30,7 +30,7 @@ export default function ViewItem() {
           <div className="w-full lg:w-1/3">
             <div className="p-10">
               <div className="flex items-center justify-between mb-10">
-                <Link to="/">
+                <Link to="/invoices">
                   <h1 className="font-bold">Go back</h1>
                 </Link>
               </div>
@@ -64,7 +64,7 @@ export default function ViewItem() {
                   </div>
                 </div>{" "}
                 <div className="flex py-4 border-b">
-                  <div className="mr-4 text-slate-400">Billing</div>
+                  <div className="mr-4 text-slate-400">Billing Type</div>
                   <div className="font-medium text-slate-800">
                     {invoices.Billing}
                   </div>

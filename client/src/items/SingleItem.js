@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../config";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SingleItem({ item, fetchData }) {
   const [nameValue, setNameValue] = useState(item.Name);
@@ -19,24 +21,76 @@ export default function SingleItem({ item, fetchData }) {
   const completeForm = () => {
     closeModal();
     fetchData();
+
+    toast.success("Item updated successfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   };
 
   const updateItem = (e) => {
     e.preventDefault();
     var form = document.getElementById(`editform-${item.ID}`);
     var formData = new FormData(form);
+
     axios
       .patch(`${API_URL}/items/${item.ID}`, formData)
       .then((res) => completeForm(form))
-      .catch((error) => console.log(error.response));
+      .catch((error) => {
+        console.log(error.response);
+
+        toast.error("Error updating item. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
   };
 
   const deleteItem = () => {
     if (window.confirm("Are you sure you want to delete this Item?") === true) {
       axios
         .delete(`${API_URL}/items/${item.ID}`)
-        .then((res) => fetchData())
-        .catch((error) => console.log(error.response));
+        .then((res) => {
+          fetchData();
+
+          toast.success("Item deleted successfully!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        })
+
+        .catch((error) => {
+          console.log(error.response);
+
+          toast.error("Error deleting item. Please try again.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        });
     } else {
       console.log("You canceled!");
     }
@@ -44,6 +98,7 @@ export default function SingleItem({ item, fetchData }) {
 
   return (
     <div className="p-4 mb-4 rounded-lg bg-slate-100 hover:border hover:border-orange-700">
+      <ToastContainer />
       <div>
         <div>
           <div className="font-medium">{item.Name}</div>

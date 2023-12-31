@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
 import SingleItem from "./SingleItem";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function List() {
   const [items, setItem] = useState([]);
@@ -40,33 +42,86 @@ export default function List() {
     closeModal();
     form.reset();
     fetchData();
-    navigate("/");
+    navigate("/items");
+
+    toast.success("Item added successfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   };
 
   const storeItem = (e) => {
     e.preventDefault();
     var form = document.getElementById("newform");
     var formData = new FormData(form);
+
+    // Check for empty fields
+    const name = formData.get("Name");
+    const price = formData.get("Price");
+    const category = formData.get("Category");
+
+    if (!name || !price || !category) {
+      toast.error("Please fill in all required fields.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
     axios
       .post(`${API_URL}/items`, formData)
       .then((res) => completeForm(form))
-      .catch((error) => console.log(error.response));
-  };
+      .catch((error) => {
+        console.log(error.response);
 
+        toast.error("Error adding item. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
+  };
   const handleButtonClick = () => {
     // Redirect to the Invoices component
     navigate("/invoices");
   };
 
+  const handleHomeClick = () => {
+    // Redirect to the Invoices component
+    navigate("/");
+  };
+
   let myPage = searchParams.get("page") ? searchParams.get("page") : 0;
 
   return (
-    
     <div className="flex justify-center">
+      <ToastContainer />
       <div className="w-full lg:w-1/3">
         <div className="p-10">
           <div className="flex items-center justify-between mb-10">
-            <h1 className="font-bold">ABC Pharmacy</h1>
+            {/* <h1 className="font-bold">ABC Pharmacy</h1> */}
+            <button
+              className="px-3 text-white bg-orange-600 py-1.5 rounded"
+              onClick={handleHomeClick}
+            >
+              Home
+            </button>
             <button
               className="px-3 text-white bg-orange-600 py-1.5 rounded"
               onClick={opneModal}
@@ -91,7 +146,7 @@ export default function List() {
             {Array.from({ length: pages }, (_, index) => index + 1).map(
               (pg, key) => (
                 <Link
-                key={key}
+                  key={key}
                   className={`border px-3 py-1 mr-3 ${
                     myPage === key ? "bg-orange-600 text-orange-100" : ""
                   }`}
@@ -120,7 +175,7 @@ export default function List() {
                     &#8203
                   </span>
                   <div className="relative inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg">
-                    <form id="newform" onSubmit={storeItem} action="">
+                    <form id="newform" action="">
                       <div className="bg-white">
                         <div className="flex justify-between px-8 py-4 border-b">
                           <h1 className="font-medium">Create new Item</h1>
@@ -164,6 +219,7 @@ export default function List() {
                           </div>
                           <div className="flex justify-end">
                             <button
+                              onClick={storeItem}
                               type="submit"
                               className="text-white bg-blue-500 py-1.5 px-4 rounded"
                             >

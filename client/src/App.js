@@ -9,6 +9,7 @@ import Home from "./components/home/Home";
 import AboutUs from "./components/AboutUs";
 import Services from "./components/Services";
 import Footer from "./components/Footer";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/invoices/:id" element={<ViewInvoice />}></Route>
         <Route path="/invoices" element={<InvoiceList />}></Route>
         <Route path="/items" element={<List />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
       </Routes>
     </Router>
   );

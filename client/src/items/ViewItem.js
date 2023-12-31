@@ -30,7 +30,7 @@ export default function ViewItem() {
           <div className="w-full lg:w-1/3">
             <div className="p-10">
               <div className="flex items-center justify-between mb-10">
-                <Link to="/">
+                <Link to="/items">
                   <h1 className="font-bold">Go back</h1>
                 </Link>
               </div>

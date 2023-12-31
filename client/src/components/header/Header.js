@@ -49,15 +49,15 @@ const Header = () => {
               </a>
             </li>
             <li className="navItem">
-              <a href="/items" className="navLink">
-                Items
+              <a href="/dashboard" className="navLink">
+                Dashboard
               </a>
             </li>
-            <li className="navItem">
+            {/* <li className="navItem">
               <a href="/invoices" className="navLink">
                 Invoices
               </a>
-            </li>
+            </li> */}
             <div className="flex headerBtns">
               <button className="btn loginBtn">
                 <a href="/login">Login</a>

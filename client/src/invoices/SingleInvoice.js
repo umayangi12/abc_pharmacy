@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../config";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SingleInvoice({ invoice, fetchData }) {
   const [inameValue, setInameValue] = useState(invoice.Iname);
@@ -23,16 +25,76 @@ export default function SingleInvoice({ invoice, fetchData }) {
   const completeForm = () => {
     closeModal();
     fetchData();
+    toast.success("Invoice updated successfully!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   };
 
   const updateInvoice = (e) => {
     e.preventDefault();
     var form = document.getElementById(`editform-${invoice.ID}`);
     var formData = new FormData(form);
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Phone number validation regex (assuming it's a 10-digit number)
+    const phoneNumberRegex = /^\d{10}$/;
+
+    const email = formData.get("Email");
+    const phoneNumber = formData.get("Mobile");
+
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
+
+    if (!phoneNumberRegex.test(phoneNumber)) {
+      toast.error("Please enter a valid 10-digit phone number.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      return;
+    }
     axios
       .patch(`${API_URL}/invoices/${invoice.ID}`, formData)
       .then((res) => completeForm(form))
-      .catch((error) => console.log(error.response));
+      .catch((error) => {
+        console.log(error.response);
+
+        toast.error("Error updating invoice. Please try again.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      });
   };
 
   const deleteInvoice = () => {
@@ -41,8 +103,34 @@ export default function SingleInvoice({ invoice, fetchData }) {
     ) {
       axios
         .delete(`${API_URL}/invoices/${invoice.ID}`)
-        .then((res) => fetchData())
-        .catch((error) => console.log(error.response));
+        .then((res) => {
+          fetchData();
+
+          toast.success("Invoice deleted successfully!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        })
+        .catch((error) => {
+          console.log(error.response);
+
+          toast.error("Error deleting invoice. Please try again.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        });
     } else {
       console.log("You canceled!");
     }
@@ -50,6 +138,7 @@ export default function SingleInvoice({ invoice, fetchData }) {
 
   return (
     <div className="p-4 mb-4 rounded-lg bg-slate-100 hover:border hover:border-orange-700">
+      <ToastContainer />
       <div>
         <div>
           <div className="font-medium">{invoice.Iname}</div>
@@ -155,7 +244,7 @@ export default function SingleInvoice({ invoice, fetchData }) {
                       </div>
                       <div className="mb-5">
                         <label className="block mb-2 text-sm font-bold text-gray-700">
-                          Billing
+                          Billing Type
                         </label>
                         <input
                           value={billingValue}
