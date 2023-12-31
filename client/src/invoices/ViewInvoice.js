@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API_URL } from "../config";
 
-export default function ViewItem() {
+export default function ViewInvoice() {
   let { id } = useParams();
   const [items, setItem] = useState([]);
   const [loading, setLoading] = useState(false);

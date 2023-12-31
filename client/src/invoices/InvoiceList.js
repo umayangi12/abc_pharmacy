@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
-import SingleItem from "./SingleItem";
+import SingleInvoice from "./SingleInvoice";
 
-export default function List() {
-  const [items, setItem] = useState([]);
+export default function InvoiceList() {
+  const [invoices, setInvoice] = useState([]);
   const [pages, setPages] = useState(0);
   const [searchParams] = useSearchParams();
   let navigate = useNavigate();
@@ -15,11 +15,11 @@ export default function List() {
       ? "&page=" + searchParams.get("page")
       : "";
     try {
-      const response = await fetch(`${API_URL}/items?sort=-id&size=5${page}`);
+      const response = await fetch(`${API_URL}/invoices?sort=-id&size=5${page}`);
       const json = await response.json();
       console.log(json)
-      setItem(json.data.items);
-      setPages(json.data.total_pages);
+      setInvoice(json.data.items );
+      setPages(json.data.total_pages );
     } catch (error) {
       console.log("error", error);
     }
@@ -44,19 +44,14 @@ export default function List() {
     navigate("/");
   };
 
-  const storeItem = (e) => {
+  const storeInvoice = (e) => {
     e.preventDefault();
     var form = document.getElementById("newform");
     var formData = new FormData(form);
     axios
-      .post(`${API_URL}/items`, formData)
+      .post(`${API_URL}/invoices`, formData)
       .then((res) => completeForm(form))
       .catch((error) => console.log(error.response));
-  };
-
-  const handleButtonClick = () => {
-    // Redirect to the Invoices component
-    navigate("/invoices");
   };
 
   let myPage = searchParams.get("page") ? searchParams.get("page") : 0;
@@ -71,21 +66,19 @@ export default function List() {
               className="px-3 text-white bg-orange-600 py-1.5 rounded"
               onClick={opneModal}
             >
-              Add Items
-            </button>
-            <button
-              className="px-3 text-white bg-orange-600 py-1.5 rounded"
-              onClick={handleButtonClick}
-            >
-              Invoices
+              Add invoices
             </button>
           </div>
           <div>
-            {items.length > 0
-              ? items.map((item, key) => (
-                  <SingleItem key={key} item={item} fetchData={fetchData} />
+            {invoices.length > 0
+              ? invoices.map((invoice, key) => (
+                  <SingleInvoice
+                    key={key}
+                    invoice={invoice}
+                    fetchData={fetchData}
+                  />
                 ))
-              : ""}
+              : "No invoices available."}
           </div>
           <div className="mt-10">
             {Array.from({ length: pages }, (_, index) => index + 1).map(
@@ -120,10 +113,10 @@ export default function List() {
                     &#8203
                   </span>
                   <div className="relative inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg">
-                    <form id="newform" onSubmit={storeItem} action="">
+                    <form id="newform" onSubmit={storeInvoice} action="">
                       <div className="bg-white">
                         <div className="flex justify-between px-8 py-4 border-b">
-                          <h1 className="font-medium">Create new Item</h1>
+                          <h1 className="font-medium">Create new Invoice</h1>
                           <button type="button" onClick={closeModal}>
                             Close
                           </button>
@@ -135,29 +128,51 @@ export default function List() {
                             </label>
                             <input
                               type="text"
-                              name="Name"
+                              name="Iname"
                               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                               required
                             />
                           </div>
                           <div className="mb-5">
                             <label className="block mb-2 text-sm font-bold text-gray-700">
-                              Unit Price
+                              Mobile Number
                             </label>
                             <input
                               type="text"
-                              name="Price"
+                              name="Mobile"
                               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                               required
                             />
                           </div>
                           <div className="mb-5">
                             <label className="block mb-2 text-sm font-bold text-gray-700">
-                              Item Category
+                              Email
                             </label>
                             <input
                               type="text"
-                              name="Category"
+                              name="Email"
+                              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                              required
+                            />
+                          </div>
+                          <div className="mb-5">
+                            <label className="block mb-2 text-sm font-bold text-gray-700">
+                              Address
+                            </label>
+                            <input
+                              type="text"
+                              name="Address"
+                              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                              required
+                            />
+                          </div>
+                          <div className="mb-5">
+                            <label className="block mb-2 text-sm font-bold text-gray-700">
+                              Billing
+                            </label>
+                            <input
+                              type="text"
+                              name="Billing"
                               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                               required
                             />

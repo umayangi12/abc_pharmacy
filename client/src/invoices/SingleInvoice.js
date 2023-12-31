@@ -3,17 +3,21 @@ import { Link } from "react-router-dom";
 import { API_URL } from "../config";
 import axios from "axios";
 
-export default function SingleItem({ item, fetchData }) {
-  const [nameValue, setNameValue] = useState(item.Name);
-  const [priceValue, setPriceValue] = useState(item.Price);
-  const [categoryValue, setCategoryValue] = useState(item.Category);
+export default function SingleInvoice({ invoice, fetchData }) {
+  const [inameValue, setInameValue] = useState(invoice.Iname);
+  const [mobileValue, setMobileValue] = useState(invoice.Mobile);
+  const [emailValue, setEmailValue] = useState(invoice.Email);
+  const [addressValue, setAddressValue] = useState(invoice.Address);
+  const [billingValue, setBillingValue] = useState(invoice.Billing);
 
   const openModal = () => {
-    document.getElementById("new-modal-" + item.ID).classList.remove("hidden");
+    document
+      .getElementById("new-modal-" + invoice.ID)
+      .classList.remove("hidden");
   };
 
   const closeModal = () => {
-    document.getElementById("new-modal-" + item.ID).classList.add("hidden");
+    document.getElementById("new-modal-" + invoice.ID).classList.add("hidden");
   };
 
   const completeForm = () => {
@@ -21,20 +25,22 @@ export default function SingleItem({ item, fetchData }) {
     fetchData();
   };
 
-  const updateItem = (e) => {
+  const updateInvoice = (e) => {
     e.preventDefault();
-    var form = document.getElementById(`editform-${item.ID}`);
+    var form = document.getElementById(`editform-${invoice.ID}`);
     var formData = new FormData(form);
     axios
-      .patch(`${API_URL}/items/${item.ID}`, formData)
+      .patch(`${API_URL}/invoices/${invoice.ID}`, formData)
       .then((res) => completeForm(form))
       .catch((error) => console.log(error.response));
   };
 
-  const deleteItem = () => {
-    if (window.confirm("Are you sure you want to delete this Item?") === true) {
+  const deleteInvoice = () => {
+    if (
+      window.confirm("Are you sure you want to delete this Invoice?") === true
+    ) {
       axios
-        .delete(`${API_URL}/items/${item.ID}`)
+        .delete(`${API_URL}/invoices/${invoice.ID}`)
         .then((res) => fetchData())
         .catch((error) => console.log(error.response));
     } else {
@@ -46,16 +52,18 @@ export default function SingleItem({ item, fetchData }) {
     <div className="p-4 mb-4 rounded-lg bg-slate-100 hover:border hover:border-orange-700">
       <div>
         <div>
-          <div className="font-medium">{item.Name}</div>
-          <div className="text-slate-400">{item.Price}</div>
-          <div className="text-slate-400">{item.Category}</div>
+          <div className="font-medium">{invoice.Iname}</div>
+          <div className="text-slate-400">{invoice.Mobile}</div>
+          <div className="text-slate-400">{invoice.Email}</div>
+          <div className="text-slate-400">{invoice.Address}</div>
+          <div className="text-slate-400">{invoice.Billing}</div>
         </div>
         <div className="flex mt-4 space-x-4 text-sm">
-          <Link to={`/items/${item.ID}`}> View Item </Link>
+          <Link to={`/invoices/${invoice.ID}`}> View Invoice </Link>
           <button className="text-green-600" onClick={openModal}>
             Edit
           </button>
-          <button onClick={deleteItem} className="text-red-600">
+          <button onClick={deleteInvoice} className="text-red-600">
             Delete
           </button>
         </div>
@@ -66,7 +74,7 @@ export default function SingleItem({ item, fetchData }) {
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
-        id={`new-modal-${item.ID}`}
+        id={`new-modal-${invoice.ID}`}
       >
         <div className="fixed inset-0 transition-opacity bg-black bg-opacity-70">
           <div className="fixed inset-0 overflow-y-auto">
@@ -79,13 +87,15 @@ export default function SingleItem({ item, fetchData }) {
               </span>
               <div className="relative inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg">
                 <form
-                  id={`editform-${item.ID}`}
-                  onSubmit={updateItem}
+                  id={`editform-${invoice.ID}`}
+                  onSubmit={updateInvoice}
                   action=""
                 >
                   <div className="bg-white">
                     <div className="flex justify-between px-8 py-4 border-b">
-                      <h1 className="font-medium">Update Item No {item.ID}</h1>
+                      <h1 className="font-medium">
+                        Update Invoice No {invoice.ID}
+                      </h1>
                       <button type="button" onClick={closeModal}>
                         Close
                       </button>
@@ -96,36 +106,62 @@ export default function SingleItem({ item, fetchData }) {
                           Name
                         </label>
                         <input
-                          value={nameValue}
-                          onChange={(e) => setNameValue(e.target.value)}
+                          value={inameValue}
+                          onChange={(e) => setInameValue(e.target.value)}
                           type="text"
-                          name="Name"
+                          name="Iname"
                           className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                           required
                         />
                       </div>
                       <div className="mb-5">
                         <label className="block mb-2 text-sm font-bold text-gray-700">
-                          Unit Price
+                          Mobile Number
                         </label>
                         <input
-                          value={priceValue}
-                          onChange={(e) => setPriceValue(e.target.value)}
+                          value={mobileValue}
+                          onChange={(e) => setMobileValue(e.target.value)}
                           type="text"
-                          name="Price"
+                          name="Mobile"
                           className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                           required
                         />
                       </div>
                       <div className="mb-5">
                         <label className="block mb-2 text-sm font-bold text-gray-700">
-                          Item Category
+                          Email
                         </label>
                         <input
-                          value={categoryValue}
-                          onChange={(e) => setCategoryValue(e.target.value)}
+                          value={emailValue}
+                          onChange={(e) => setEmailValue(e.target.value)}
                           type="text"
-                          name="Category"
+                          name="Email"
+                          className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                          required
+                        />
+                      </div>
+                      <div className="mb-5">
+                        <label className="block mb-2 text-sm font-bold text-gray-700">
+                          Address
+                        </label>
+                        <input
+                          value={addressValue}
+                          onChange={(e) => setAddressValue(e.target.value)}
+                          type="text"
+                          name="Address"
+                          className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                          required
+                        />
+                      </div>
+                      <div className="mb-5">
+                        <label className="block mb-2 text-sm font-bold text-gray-700">
+                          Billing
+                        </label>
+                        <input
+                          value={billingValue}
+                          onChange={(e) => setBillingValue(e.target.value)}
+                          type="text"
+                          name="Billing"
                           className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                           required
                         />

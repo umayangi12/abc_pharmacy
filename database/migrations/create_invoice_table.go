@@ -6,6 +6,7 @@ import (
 type Invoices struct {
 	ID uint `gorm:"primary key;autoIncrement" json: "id"`
 	Iname string `json : "iname"`
+	Mobile string `json : "mobile"`
 	Email string `json : "email"`
 	Address string `json : "address"`
 	Billing string `json : "billing"`
