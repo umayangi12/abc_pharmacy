@@ -172,7 +172,6 @@ export default function SingleInvoice({ invoice, fetchData }) {
                 className="hidden sm:inline-block sm:align-middle sm:h-screen"
                 aria-hidden="true"
               >
-                &#8203
               </span>
               <div className="relative inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg">
                 <form

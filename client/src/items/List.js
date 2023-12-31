@@ -5,6 +5,8 @@ import { API_URL } from "../config";
 import SingleItem from "./SingleItem";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoChevronBackSharp } from "react-icons/io5";
+
 
 export default function List() {
   const [items, setItem] = useState([]);
@@ -97,10 +99,6 @@ export default function List() {
         });
       });
   };
-  const handleButtonClick = () => {
-    // Redirect to the Invoices component
-    navigate("/invoices");
-  };
 
   const handleHomeClick = () => {
     // Redirect to the Invoices component
@@ -116,6 +114,12 @@ export default function List() {
         <div className="p-10">
           <div className="flex items-center justify-between mb-10">
             {/* <h1 className="font-bold">ABC Pharmacy</h1> */}
+            <div className="flex items-center justify-between mb-0">
+              <Link to="/dashboard" className="flex items-center">
+                <IoChevronBackSharp />
+                <h1 className="ml-2 font-bold">Go back</h1>
+              </Link>
+            </div>
             <button
               className="px-3 text-white bg-orange-600 py-1.5 rounded"
               onClick={handleHomeClick}
@@ -127,12 +131,6 @@ export default function List() {
               onClick={opneModal}
             >
               Add Items
-            </button>
-            <button
-              className="px-3 text-white bg-orange-600 py-1.5 rounded"
-              onClick={handleButtonClick}
-            >
-              Invoices
             </button>
           </div>
           <div>
@@ -172,7 +170,6 @@ export default function List() {
                     className="hidden sm:inline-block sm:align-middle sm:h-screen"
                     aria-hidden="true"
                   >
-                    &#8203
                   </span>
                   <div className="relative inline-block w-full overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg">
                     <form id="newform" action="">

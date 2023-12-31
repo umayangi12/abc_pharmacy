@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API_URL } from "../config";
+import { IoChevronBackSharp } from "react-icons/io5";
+
 
 export default function ViewItem() {
   let { id } = useParams();
@@ -30,8 +32,9 @@ export default function ViewItem() {
           <div className="w-full lg:w-1/3">
             <div className="p-10">
               <div className="flex items-center justify-between mb-10">
-                <Link to="/items">
-                  <h1 className="font-bold">Go back</h1>
+                <Link to="/items" className="flex items-center">
+                  <IoChevronBackSharp />
+                  <h1 className="ml-2 font-bold">Go back</h1>
                 </Link>
               </div>
               <div>
