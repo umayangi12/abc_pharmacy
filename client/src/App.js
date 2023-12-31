@@ -8,6 +8,7 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import AboutUs from "./components/AboutUs";
 import Services from "./components/Services";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Home/>
               <AboutUs/>
               <Services/>
+              <Footer/>
               
             </div>
           }

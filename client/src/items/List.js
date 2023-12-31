@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
 import SingleItem from "./SingleItem";
-import Header from "../components/header/Header";
 
 export default function List() {
   const [items, setItem] = useState([]);
@@ -64,7 +63,6 @@ export default function List() {
   return (
     
     <div className="flex justify-center">
-      <Header/>
       <div className="w-full lg:w-1/3">
         <div className="p-10">
           <div className="flex items-center justify-between mb-10">
