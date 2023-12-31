@@ -1,6 +1,6 @@
 # ABC Pharmacy Project
 
-Welcome to the ABC Pharmacy project! This project is designed to manage items and invoices for a pharmacy, with a backend built in Go and a frontend built in React.
+Welcome to the ABC Pharmacy! This project is designed to manage items and invoices for a pharmacy, with a backend built in Go and a frontend built in React.
 
 ## Project Overview
 
