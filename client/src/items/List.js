@@ -7,7 +7,7 @@ import SingleItem from "./SingleItem";
 export default function List() {
   const [items, setItem] = useState([]);
   const [pages, setPages] = useState(0);
-  const [searchParams, setSearchPArams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   let navigate = useNavigate();
 
   const fetchData = async () => {
@@ -80,7 +80,7 @@ export default function List() {
               (pg, key) => (
                 <Link
                   className={`border px-3 py-1 mr-3 ${
-                    myPage == key ? "bg-orange-600 text-orange-100" : ""
+                    myPage === key ? "bg-orange-600 text-orange-100" : ""
                   }`}
                   to={`?page=${key}`}
                 >
@@ -102,7 +102,7 @@ export default function List() {
                 <div className="flex items-start justify-center text-center min-h-screenpt-4 sm:block sm:p-0">
                   <span
                     className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                    aria-hidden="ture"
+                    aria-hidden="true"
                   >
                     &#8203
                   </span>

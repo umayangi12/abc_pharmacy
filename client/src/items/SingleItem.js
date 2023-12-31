@@ -33,7 +33,7 @@ export default function SingleItem({ item, fetchData }) {
 
        const deleteItem = () => {
          if (
-           window.confirm("Are you sure you want to delete this Item?") == true
+           window.confirm("Are you sure you want to delete this Item?") === true
          ) {
            axios
              .delete(`${API_URL}/items/${item.ID}`)
@@ -75,7 +75,7 @@ export default function SingleItem({ item, fetchData }) {
             <div className="flex items-start justify-center text-center min-h-screenpt-4 sm:block sm:p-0">
               <span
                 className="hidden sm:inline-block sm:align-middle sm:h-screen"
-                aria-hidden="ture"
+                aria-hidden="true"
               >
                 &#8203
               </span>

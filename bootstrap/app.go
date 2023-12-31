@@ -36,6 +36,7 @@ func InitializeApp(app *fiber.App) {
 	}
 
 	err = migrations.MigrateItems(db)
+	err = migrations.MigrateInvoices(db)
 
 	if err != nil {
 		log.Fatal("Could not migrate db")
