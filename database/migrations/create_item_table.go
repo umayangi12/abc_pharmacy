@@ -11,8 +11,9 @@ type Items struct {
 }
 
 
+//perform database migrations
 func MigrateItems(db *gorm.DB) error {
-	err := db.AutoMigrate(&Items{})
+	err := db.AutoMigrate(&Items{}) //automatically creates or updates the db
 	return err
 
 }

@@ -15,13 +15,14 @@ type ErrorResponse struct {
 	Value       string
 }
 
-var validate = validator.New()
+var validate = validator.New() //creating validaotor instance
 
 func ValidateStruct(item models.Item) []*ErrorResponse {
 	var errors []*ErrorResponse
-	err := validate.Struct(item)
+	err := validate.Struct(item) //validate the given structure
 
 	if err != nil {
+		//iterate through the errors
 		for _, err := range err.(validator.ValidationErrors) {
 			var element ErrorResponse
 			element.FailedField = err.StructNamespace()
@@ -36,16 +37,18 @@ func ValidateStruct(item models.Item) []*ErrorResponse {
 }
 
 func (r *Repository) GetItems(context *fiber.Ctx) error {
-	db := r.DB
-	model := db.Model(&migrations.Items{})
+	db := r.DB //getting gorm db instance
+	model := db.Model(&migrations.Items{}) //creating gorm model
 
-	pg := paginate.New(&paginate.Config{
-		DefaultSize:        20,
+	pg := paginate.New(&paginate.Config{ //creating pagination instance
+		DefaultSize:        20, //item per page
 		CustomParamEnabled: true,
 	})
 
+	//perform pagination on the model based in the req
 	page := pg.With(model).Request(context.Request()).Response(&[]migrations.Items{})
 
+	//sending paginated data as a JSON response
 	context.Status(http.StatusOK).JSON(&fiber.Map{
 		"data": page,
 	})
@@ -53,8 +56,8 @@ func (r *Repository) GetItems(context *fiber.Ctx) error {
 
 }
 func (r *Repository) CreateItem(context *fiber.Ctx) error {
-	item := models.Item{}
-	err := context.BodyParser(&item)
+	item := models.Item{} //initiating a empty item structure
+	err := context.BodyParser(&item) //parse the request body 
 
 	if err != nil {
 		context.Status(http.StatusUnprocessableEntity).JSON(&fiber.Map{
@@ -64,18 +67,20 @@ func (r *Repository) CreateItem(context *fiber.Ctx) error {
 
 	}
 
+	//validate the item
 	errors := ValidateStruct(item)
 
 	if errors != nil {
 		return context.Status(fiber.StatusBadRequest).JSON(errors)
 	}
 
+	//create a new item in the db
 	if err := r.DB.Create(&item).Error; err != nil {
-		return context.Status(http.StatusBadRequest).JSON(fiber.Map{
+		return context.Status(http.StatusBadRequest).JSON(fiber.Map{ //error validatio
 			"status": "error", "message": "Couldn't create item", "data": err})
 	}
 
-	context.Status(http.StatusOK).JSON(&fiber.Map{
+	context.Status(http.StatusOK).JSON(&fiber.Map{ //success response
 		"message": " Item has been added",
 		"data":    item})
 	return nil
@@ -101,7 +106,7 @@ func (r *Repository) UpdateItem(context *fiber.Ctx) error {
 	}
 
 	db := r.DB
-	id := context.Params("id")
+	id := context.Params("id") //obtain the id
 
 	if id == "" {
 		context.Status(http.StatusBadRequest).JSON(&fiber.Map{

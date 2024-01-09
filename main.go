@@ -9,6 +9,6 @@ import (
 type Repository repository.Repository
 
 func main () {
-	app := fiber.New()
+	app := fiber.New() //created fiber object
 	bootstrap.InitializeApp(app)
 }

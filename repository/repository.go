@@ -1,5 +1,6 @@
 package repository
 
+//gorm simplifies database interaction
 import (
 	"gorm.io/gorm"
 )

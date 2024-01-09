@@ -7,8 +7,9 @@ import (
 func (repo *Repository) SetUpRoutes(app *fiber.App){
 
 	//list of items
-	api := app.Group("/api")
+	api := app.Group("/api") //api prefix
 
+	//item routes
 	api.Get("/items", repo.GetItems)
 	api.Post("/items", repo.CreateItem)
 	api.Patch("/items/:id", repo.UpdateItem)
@@ -16,6 +17,7 @@ func (repo *Repository) SetUpRoutes(app *fiber.App){
 	api.Get("/items/:id", repo.GetItemByID)
 
 
+	//invoice routes
 	api.Get("/invoices", repo.GetInvoices)
 	api.Post("/invoices", repo.CreateInvoice)
 	api.Patch("/invoices/:id", repo.UpdateInvoice)
